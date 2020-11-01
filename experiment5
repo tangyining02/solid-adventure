@@ -1,0 +1,238 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define STU_NUM 30
+void ReadScore(long num[],float score[],int n);
+void AverSumScore(float score[],int n);
+void DeSortbyScore(long num[],float score[],int n);
+void AsSortbyScore(long num[],float score[],int n);
+void AsSortbyNum(long num[],float score[],int n);
+void SearchbyNum(long num[],float score[],int n);
+void StatisticAnalysis(float score[],int n);
+void PrintScore(long num[],float score[],int n);
+int main ()
+{
+    printf("Number：20021041\nName:汤依宁\nSubject No.6\n\n");
+    int n;
+    int itemSelected;
+    float score[STU_NUM];
+    long num[STU_NUM];
+
+    while(1)
+    {
+        printf("1.Input record\n");
+        printf("2.Calculate total and average score of course\n");
+        printf("3.Sort in descending order by score\n");
+        printf("4.Sort in ascending order by score\n");
+        printf("5.Sort in ascending order by student's ID\n");
+        printf("6.Search by student's ID\n");
+        printf("7.Statistic analysis\n");
+        printf("8.list record\n");
+        printf("9.Exit\n\n");
+
+        printf("Please enter your choice:\n");
+        scanf("%d",&itemSelected);
+
+        switch (itemSelected)
+        {
+            case 1:
+                printf("How many students?\n");
+                scanf("%d",&n);
+                ReadScore(num,score,n);
+                break;
+            case 2:
+                AverSumScore(score,n);
+                break;
+            case 3:
+                DeSortbyScore(num,score,n);
+                printf("\nSort in descending order by score:\n");
+                PrintScore(num,score,n);
+                break;
+            case 4:
+                AsSortbyScore(num,score,n);
+                printf("\nSort in ascending order by score:\n");
+                PrintScore(num,score,n);
+                break;
+
+            case 5:
+                AsSortbyNum(num,score,n);
+                printf("\nSort in ascending order by number:\n");
+                PrintScore(num,score,n);
+                break;
+            case 6:
+                SearchbyNum(num,score,n);
+                break;
+            case 7:
+                StatisticAnalysis(score,n);
+                break;
+            case 8:
+                PrintScore(num,score,n);
+                break;
+            case 9:
+                printf("End of program!\n");
+                exit (0);
+
+        }
+    }
+}
+/*函数功能：录入每个学生的学号和考试成绩*/
+void ReadScore(long num[],float score[],int n)
+{
+    int i;
+    printf("Please input students'ID and score,format as:(20201111 89)\n");
+    for(i=0;i<n;i++)
+    {
+        scanf("%ld %f",&num[i],&score[i]);
+    }
+    printf("Have sorted the data successfully,thanks!\n\n");
+}
+/*函数功能：计算课程总分和平均分*/
+void AverSumScore(float score[],int n)
+{
+    int i;
+    float sum=0;
+    float average=0;
+    for(i=0;i<n;i++)
+    {
+        sum=sum+score[i];
+    }
+    average=sum/n;
+    printf("Total score is %.2f,average score is %.2f\n\n",sum,average);
+
+}
+/*函数功能：用选择法按成绩score由高到低排序*/
+void DeSortbyScore(long num[],float score[],int n)
+{
+    int i,j,k;
+    float temp1;
+    float temp2;
+    for(i=0;i<n-1;i++)
+    {
+        k=i;
+        for(j=1;j<n;j++)
+        {
+            if(score[i]<score[j])
+            k=j;
+
+        }
+        if(k!=i)
+        {
+            temp1=score[i];
+            score[i]=score[k];
+            score[k]=temp1;
+
+            temp2=num[i];
+            num[i]=num[k];
+            num[k]=temp2;
+        }
+
+    }
+}
+/*函数功能：用选择法按成绩score由低到高排序*/
+void AsSortbyScore(long num[],float score[],int n)
+{
+    int i,j,k;
+    float temp1;
+    float temp2;
+    for(i=0;i<n-1;i++)
+    {
+        k=i;
+        for(j=1;j<n;j++)
+        {
+            if(score[i]>score[j])
+            k=j;
+
+        }
+        if(k!=i)
+        {
+            temp1=score[i];
+            score[i]=score[k];
+            score[k]=temp1;
+
+            temp2=num[i];
+            num[i]=num[k];
+            num[k]=temp2;
+        }
+
+    }
+}
+/*函数功能：用选择法将学号num由小到大排序*/
+void AsSortbyNum(long num[],float score[],int n)
+{
+   int i,j,k;
+    float temp1;
+    float temp2;
+    for(i=0;i<n-1;i++)
+    {
+        k=i;
+        for(j=1;j<n;j++)
+        {
+            if(num[i]>num[j])
+            k=j;
+
+        }
+        if(k!=i)
+        {
+            temp1=num[i];
+            num[i]=num[k];
+            num[k]=temp1;
+
+            temp2=score[i];
+            score[i]=score[k];
+            score[k]=temp2;
+
+        }
+
+    }
+}
+/*函数功能：按学号查询学生排名及考试成绩*/
+void SearchbyNum(long num[],float score[],int n)
+{
+    long number;
+    int i;
+    printf("Input the ID you want to search:");
+    scanf("%ld",&number);
+    for(i=0;i<n;i++)
+    {
+        if(num[i]==number)
+            printf("%ld %.2f\n",num[i],score[i]);
+            printf("\n");
+            return;
+    }
+    printf("\nNot found!\n");
+}
+/*函数功能：计算5个类别的百分比*/
+void StatisticAnalysis(float score[],int n)
+{
+    int a,b,c,d,e,i;
+    a=b=c=d=e=0;
+    for(i=0;i<n;i++)
+    {
+        if(score[i]>=90 &&score[i]<=100)
+            a++;
+        else if(score[i]>=80 &&score[i]<=89)
+            b++;
+        else if(score[i]>=70 &&score[i]<=79)
+            c++;
+        else if(score[i]>=60 &&score[i]<=69)
+            d++;
+        else if(score[i]>=0 &&score[i]<=59)
+            e++;
+    }
+    printf("excellent %d %.2f\n",a,(float)a/n);
+    printf("good      %d %.2f\n",b,(float)b/n);
+    printf("medium    %d %.2f\n",c,(float)c/n);
+    printf("pass      %d %.2f\n",d,(float)d/n);
+    printf("fail      %d %.2f\n\n",e,(float)e/n);
+}
+/*函数功能：输出每个学生的学号，考试成绩*/
+void PrintScore(long num[],float score[],int n)
+{
+    int j;
+    printf("  ID      score\n");
+    for(j=0;j<n;j++)
+    {
+        printf("%ld  %.2f\n",num[j],score[j]);
+    }
+    printf("\n");
+}
+
